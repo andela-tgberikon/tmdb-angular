@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="TMDB">
+  <head>
+    <title>TMDb API CALL</title>
+    <link rel="stylesheet" type="text/css" href="css/cssReset.css">
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-controller="moviesController as movies">
+      <div>
+        <button ng-click="yem()">CLick me!</button>
+      </div>
+    </div>
+        <div id="scam">
+        <input type="text" id="movieID" class="searchMovies"placeholder="Type a movie to search" />
+        <input type="button" value="Get Movies" id="searchMoviesButton" class="button" />
+    </div>
+    <div class="container">
+        <div id="thinLine"></div>
+        <div id="compact-pagination" class="compact-theme simple-pagination">
+            <ul></ul>
+        </div>
+        <ul id="currentMovies"></ul>
+    </div>
+
+    <div class="reviews" id="geoLocation">
+    <!-- <input type='button' id="viewTrailer2" class="trailerNav" value='Watch Trailer' /> -->
+        <input id='backButton' type='button' value='Back To Search'/>
+        <div class="reviews" id="movieDescription"></div>
+        <img class="reviews" id="image" src="">
+        <div class="reviews">
+          <ul class="reviews" id="reviews"></ul>
+        </div>
+        <iframe id="trailers" src=""></iframe>
+        <input type='button' value="Watch Trailer"  id="viewTrailer" class="trailerNav" />
+        <input type='button' id="backToReview" class="trailerNav" value='Back To Review'/>
+    </div>
+  </body>
+  <script src="app.js" type="text/javascript"></script>
+</html>
