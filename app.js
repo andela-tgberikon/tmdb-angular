@@ -1,15 +1,4 @@
 angular.module('TMDB', [])
-  // .service('movieService', ['$http', function($http){
-  //   return {
-  //     popular: function() {
-  //       $http.get(x).success(function(res, req){
-  //         console.log('Success response: ', res);
-  //       }).error(function(res, req){
-  //         console.log('Error response: ', res);
-  //       });
-  //     }
-  //   }
-  // }])
   .controller('moviesController', ['$http', '$scope', function($http, $scope) {
     var TMDBparams = {
       baseSearchMovie: "https://api.themoviedb.org/3/search/movie",
@@ -22,12 +11,11 @@ angular.module('TMDB', [])
     $scope.yem = function() {
       console.log("Yeet!", TMDBparams.base2 + TMDBparams.params.api_key);
     };
-    //movieService.popular(TMDBparams.base2 + TMDBparams.params.api_key);
     $scope.popularMovies = function() {
-      $http.get('TMDBparams.base2 + TMDBparams.params.api_key').success(function(res, req){
+      $http.jsonp('TMDBparams.base2 + TMDBparams.params.api_key').success(function(res, req) {
         console.log('This is the success response: ', res);
         console.log('This is the success request: ', req)
-      }).error(function(res, req){
+      }).error(function(res, req) {
         console.log('This is the error response: ', res);
         console.log('This is the error request: ', req)
       })
