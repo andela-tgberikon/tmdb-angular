@@ -12,8 +12,14 @@
 <body>
     <div ng-controller="moviesController">
         <div ng-init="popularMovies()">
-            <div ng-repeat="movie in trendingMovies" class="oneMovie" ng-click="oneMovie(movie.id)">
-                {{ movie }}
+            <div>
+                <input type="text" ng-model="popularity">Search by popularity</input>
+            </div>
+            <div ng-repeat="movie in displayMovies | filter:popularity" class="oneMovie" ng-click="oneMovie(movie.id)">
+                <p> Title: {{ movie.original_title }}</p><br>
+                <p> Overview: {{ movie.overview }} </p><br>
+                <p> Popularity: {{ movie.popularity }} </p><br>
+                <p> Release Date: {{ movie.release_date }} </p><br>
             </div>
         </div>
         <div>
@@ -25,4 +31,5 @@
 <script src="scripts/app.js" type="text/javascript"></script>
 <script src="scripts/services.js" type="text/javascript"></script>
 <script src="scripts/controllers.js" type="text/javascript"></script>
+
 </html>

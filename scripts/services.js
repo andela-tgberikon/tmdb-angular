@@ -1,8 +1,8 @@
 angular.module('TMDB.services', [])
   .service('getMovies', ['$http', function($http) {
     return {
-      popularMovies: function(movieCallBack, page) {
-        $http.get(TMDBparams.base2 + TMDBparams.params.api_key + '&page=' + page).then(function(response, request) {
+      popularMovies: function(movieCallBack) {
+        $http.get(TMDBparams.base2 + TMDBparams.params.api_key).then(function(response, request) {
           return movieCallBack(response.data);
         });
       },
