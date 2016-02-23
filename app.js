@@ -1,28 +1,54 @@
 var TMDB = angular.module('TMDB', []);
 
-TMDB.config(function($httpProvider) {
+TMDB.config(function() {
   return TMDBparams = {
     baseSearchMovie: "https://api.themoviedb.org/3/search/movie",
+    base1: 'https://api.themoviedb.org/3/movie/',
     base2: 'https://api.themoviedb.org/3/movie/popular',
     baseUrl: "",
     youtubeUrl: "http://www.youtube.com/embed/",
     baseMovieTrailer: "https://api.themoviedb.org/3/movie/",
-    params: {
+    params: { 
       api_key: "?api_key=fb5a22ba28e3a8b761c623cb071fa7a9",
       page: 0
-    }
+     }
   };
 });
 
-TMDB.controller('moviesController', ['$http', '$scope', function($http, $scope) {
-  $scope.yem = function() {
-    console.log("Yeet!", TMDBparams.base2);
-    myMovies.load();
+TMDB.service('getMovies', ['$http', function($http) {
+  return {
+    popularMovies: function(movieCallBack, page) {
+      $http.get(TMDBparams.base2 + TMDBparams.params.api_key + '&page=' + page).then(function(response, request) {
+        return movieCallBack(response.data);
+      });
+    },
+    getOneMovie: function(movieID, movieCallBack) {
+      $http.get(TMDBparams.base1 + movieID + TMDBparams.params.api_key).then(function(response, request) {
+        return movieCallBack(response.data);
+      });
+    },
+    searchMovie: function(movieName, movieCallBack) {
+      $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName).then(function(response, request) {
+        return movieCallBack(response.data);
+      });
+    }
+  }
+}]);
+
+TMDB.controller('moviesController', ['$scope', 'getMovies', function($scope, getMovies) {
+  $scope.oneMovie = function(movie) {
+    getMovies.getOneMovie(movie, function(movie) {
+      console.log(movie, 'This is getOneMovie');
+    });
   };
-  $scope.popularMovies = function() {
-    $http.get(TMDBparams.base2 + TMDBparams.params.api_key).then(function(res, req) {
-      console.log('This is the success response: ', res);
-      console.log('This is the success request: ', req)
+  $scope.popularMovies = getMovies.popularMovies(function(movies) {
+    console.log(movies.results, 'This is popularMovies');
+    $scope.trendingMovies = movies.results;
+  });
+  $scope.search = function(movie) {
+    console.log(movie)
+    getMovies.searchMovie(movie, function(movie) {
+      console.log(movie, 'THis is the movie');
     });
   }
 }]);
