@@ -2,17 +2,28 @@ angular.module('TMDB.controllers', [])
   .controller('moviesController', ['$scope', 'getMovies', function($scope, getMovies) {
     $scope.oneMovie = function(movie) {
       getMovies.getOneMovie(movie, function(movie) {
-        console.log(movie, 'This is getOneMovie');
+        $scope.showcase = true;
+        $scope.movieReel = movie;
+        $scope.displayMovies = '';
       });
     };
     $scope.popularMovies = getMovies.popularMovies(function(movies) {
-      console.log(movies.results, 'This is popularMovies');
+      $scope.popular = true;
+      $scope.showcase = false;
       $scope.displayMovies = movies.results;
     });
+    
     $scope.search = function(movie) {
-      getMovies.searchMovie(movie, function(movie) {
-        console.log(movie, 'THis is the movie');
-        $scope.displayMovies = movie.results;
-      });
+      if (angular.isUndefined(movie)) {
+        return false;
+      } else {
+        getMovies.findMovie(movie, function(movie) {
+          $scope.popular = true;
+          $scope.showcase = false;
+          $scope.displayMovies = movie.results;
+          $scope.movie = '';
+          $scope.movieReel = '';
+        });
+      }
     };
   }]);

@@ -1,6 +1,7 @@
 angular.module('TMDB', [
   'TMDB.controllers',
-  'TMDB.services'
+  'TMDB.services',
+  'TMDB.directives'
   ])
 .config(function() {
   return TMDBparams = {

@@ -11,9 +11,14 @@ angular.module('TMDB.services', [])
           return movieCallBack(response.data);
         });
       },
-      searchMovie: function(movieName, movieCallBack) {
+      findMovie: function(movieName, movieCallBack) {
         $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName).then(function(response, request) {
-          return movieCallBack(response.data);
+          if (response.data.total_results == 0) {
+            console.log(false, "It's a lie, no movie typed");
+            return false;
+          } else {
+            return movieCallBack(response.data);
+          }
         });
       }
     }
