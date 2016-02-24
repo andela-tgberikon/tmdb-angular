@@ -15,6 +15,7 @@
     <div ng-init="popularMovies()">
     <button ng-click="previousPage()"> Previous page</button>
     <button ng-click="nextPage()"> Next page</button>
+    <button ng-click="backToSearch()">Back to results</button>
       <div ng-repeat="movie in displayMovies" class="oneMovie ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
         <p> Title: {{ movie.original_title }}</p>
         <br>

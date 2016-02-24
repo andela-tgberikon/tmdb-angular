@@ -39,11 +39,7 @@ angular.module('TMDB.controllers', [])
           $scope.showcase = false;
           $scope.displayMovies = movies.results;
         });
-        // if(TMDBparams.storedMovies.page + 1 > TMDBparams.storedMovies.total_pages){
-        //   return false;
-        // }else{
         TMDBparams.storedMovies = '';
-        // }
       }
     };
     $scope.previousPage = function() {
@@ -52,6 +48,7 @@ angular.module('TMDB.controllers', [])
         return false;
       } else {
         console.log(TMDBparams.storedMovies.page - 1, 'Going back one page');
+        console.log(TMDBparams.storedMovies, 'this is TMDBparams.storedMovies');
          TMDBparams.storedMovies.page = TMDBparams.storedMovies.page - 1;
          TMDBparams.params.page = TMDBparams.storedMovies.page;
          console.log(TMDBparams.storedMovies, 'previousPage storedMovies');
@@ -62,5 +59,13 @@ angular.module('TMDB.controllers', [])
         });
          TMDBparams.storedMovies = '';
       }
+    };
+    $scope.backToSearch = function() {
+      console.log(TMDBparams.storedMovies, 'this is the storedMovies from backToSearch');
+      $scope.displayMovies = TMDBparams.storedMovies.results;
+      $scope.popular = true;
+      $scope.showcase = false;
+      $scope.movieReel = '';
+      $scope.movie = '';
     }
   }]);
