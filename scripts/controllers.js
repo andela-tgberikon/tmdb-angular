@@ -12,7 +12,6 @@ angular.module('TMDB.controllers', [])
       $scope.showcase = false;
       $scope.displayMovies = movies.results;
     });
-    
     $scope.search = function(movie) {
       if (angular.isUndefined(movie)) {
         return false;
@@ -26,4 +25,42 @@ angular.module('TMDB.controllers', [])
         });
       }
     };
+    $scope.nextPage = function() {
+      if ((TMDBparams.storedMovies.page + 1) > (TMDBparams.storedMovies.total_pages)) {
+        return false;
+      } else {
+        console.log(TMDBparams.storedMovies.page, 'This is the current page');
+        TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
+        TMDBparams.params.page = TMDBparams.storedMovies.page;
+        console.log(TMDBparams.params.page);
+        console.log(TMDBparams.storedMovies, 'nextPage storedMovies');
+        getMovies.popularMovies(function(movies) {
+          $scope.popular = true;
+          $scope.showcase = false;
+          $scope.displayMovies = movies.results;
+        });
+        // if(TMDBparams.storedMovies.page + 1 > TMDBparams.storedMovies.total_pages){
+        //   return false;
+        // }else{
+        TMDBparams.storedMovies = '';
+        // }
+      }
+    };
+    $scope.previousPage = function() {
+      if ((TMDBparams.storedMovies.page - 1) == 0) {
+        console.log('Exceeded the starting number');
+        return false;
+      } else {
+        console.log(TMDBparams.storedMovies.page - 1, 'Going back one page');
+         TMDBparams.storedMovies.page = TMDBparams.storedMovies.page - 1;
+         TMDBparams.params.page = TMDBparams.storedMovies.page;
+         console.log(TMDBparams.storedMovies, 'previousPage storedMovies');
+         getMovies.popularMovies(function(movies) {
+          $scope.popular = true;
+          $scope.showcase = false;
+          $scope.displayMovies = movies.results;
+        });
+         TMDBparams.storedMovies = '';
+      }
+    }
   }]);
