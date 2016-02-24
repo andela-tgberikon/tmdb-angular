@@ -6,6 +6,7 @@ angular.module('TMDB', [
   ])
 .config(function() {
   return TMDBparams = {
+    SearchMovie: '',
     storedMovies: '',
     baseSearchMovie: "https://api.themoviedb.org/3/search/movie",
     base1: 'https://api.themoviedb.org/3/movie/',

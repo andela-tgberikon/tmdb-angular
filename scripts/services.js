@@ -28,8 +28,9 @@ angular.module('TMDB.services', [])
             console.log(false, "It's a lie, no movie typed");
             return false;
           } else {
-            console.log(response.data, 'from findMovie');
+            // console.log(response.data, 'from findMovie');
             TMDBparams.storedMovies = response.data;
+            console.log(TMDBparams.storedMovies, 'from findMovie TMDBparams.storedMovies');
             return movieCallBack(response.data);
           }
         });
