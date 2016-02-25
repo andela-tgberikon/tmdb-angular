@@ -5,8 +5,11 @@ angular.module('TMDB.controllers', [])
       getPopularMovies: function() {
         getMovies.popularMovies(function(movies) {
           $scope.popular = true;
+          $scope.buttons = true;
           $scope.showcase = false;
           $scope.displayMovies = movies.results;
+          $scope.currentPage = TMDBparams.storedMovies.page;
+          $scope.totalPages = TMDBparams.storedMovies.total_pages;
         });
       },
       loadObjects: function() {
@@ -16,6 +19,7 @@ angular.module('TMDB.controllers', [])
       },
       setDisplay: function() {
         $scope.popular = true;
+        $scope.buttons = true;
         $scope.showcase = false;
         $scope.movieReel = '';
       }
@@ -30,6 +34,7 @@ angular.module('TMDB.controllers', [])
         $scope.showcase = true;
         $scope.movieReel = movie;
         $scope.displayMovies = '';
+        $scope.buttons = false;
       });
     };
 
@@ -43,8 +48,8 @@ angular.module('TMDB.controllers', [])
         getMovies.findMovie(movieName, function(movieName) {
           paginateObject.setDisplay();
           $scope.displayMovies = movieName.results;
-          $scope.movieName = '';
         });
+          $scope.movieName = '';
       }
     };
 
@@ -58,16 +63,16 @@ angular.module('TMDB.controllers', [])
         } else {
           //findMovie API call
           console.log(TMDBparams.searchMovieName, ' Call the findMovie method now');
-          var movieName = TMDBparams.searchMovieName;
+          //var movieName = TMDBparams.searchMovieName;
+          console.log(TMDBparams.searchMovieName, 'this is the movieName');
           TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
           TMDBparams.params.page = TMDBparams.storedMovies.page;
-          getMovies.findMovie(movieName, function(movieName) {
+          getMovies.findMovie(TMDBparams.searchMovieName, function(movieName) {
             paginateObject.setDisplay();
             $scope.displayMovies = movieName.results;
             $scope.movieName = '';
           });
         }
-
       }
     };
 
@@ -75,6 +80,7 @@ angular.module('TMDB.controllers', [])
       if ((TMDBparams.storedMovies.page - 1) === 0) {
         return false;
       } else {
+        //if (!TMDBparams.searchMovieName) {} else {}
         TMDBparams.storedMovies.page = TMDBparams.storedMovies.page - 1;
         paginateObject.loadObjects();
       }
@@ -91,6 +97,7 @@ angular.module('TMDB.controllers', [])
     };
 
     $scope.goToPage = function(pageNumber) {
+      console.log(pageNumber);
       TMDBparams.storedMovies.page = pageNumber;
       paginateObject.loadObjects();
     }

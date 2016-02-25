@@ -13,13 +13,17 @@
 <body ng-cloak>
   <div ng-controller="moviesController">
     <div ng-init="popularMovies()">
-    <button ng-click="firstPage()">First Page</button>
-    <button ng-click="previousPage()"> Previous page</button>
-    <button ng-click="nextPage()"> Next page</button>
-    <button ng-click="lastPage()">Last Page</button>
-    <button ng-click="goToPage(pageNumber)">Go to Page</button>
-    <input type="number" ng-model="pageNumber"></input>
-    <button ng-click="backToSearch()">Back to results</button>
+      <button ng-click="firstPage()" ng-if="buttons" ng-cloak>First Page</button>
+      <button ng-click="previousPage()" ng-if="buttons" ng-cloak> Previous page</button>
+      <button ng-click="nextPage()" ng-if="buttons" ng-cloak> Next page</button>
+      <button ng-click="lastPage()" ng-if="buttons" ng-cloak>Last Page</button>
+      <span ng-if="buttons">
+        <button ng-click="goToPage(pageNumber)" ng-cloak>Go to Page</button>
+        <input type="number" ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}"></input>
+      </span>
+      <span ng-model="currentPage" ng-if="buttons">Page {{ currentPage }} of </span>
+      <span ng-model="totalPages" ng-if="buttons">{{ totalPages }}</span>
+      <button ng-click="backToSearch()">Back to results</button>
       <div ng-repeat="movie in displayMovies" class="oneMovie ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
         <p> Title: {{ movie.original_title }}</p>
         <br>

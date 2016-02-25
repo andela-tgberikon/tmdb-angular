@@ -21,19 +21,24 @@ angular.module('TMDB.services', [])
       },
       findMovie: function(movieName, movieCallBack) {
         if (movieName && (TMDBparams.params.page > 1)) {
-          console.log('paginate page');
-        } else {
-          console.log('paginate your ass mofo');
-        }
-        $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName).then(function(response, request) {
-          if (response.data.total_results === 0) {
-            return false;
-          } else {
-            console.log(response.data, ' This is findMovie');
+          console.log(movieName, 'paginate page');
+          $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName + '&page=' + TMDBparams.params.page).then(function(response, request) {
+            console.log(response.data, 'this is the paginated findMovie');
             TMDBparams.storedMovies = response.data;
             return movieCallBack(response.data);
-          }
-        });
+          });
+        } else {
+          console.log(movieName, 'paginate your ass mofo');
+          $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName).then(function(response, request) {
+            if (response.data.total_results === 0) {
+              return false;
+            } else {
+              console.log(response.data, ' This is findMovie');
+              TMDBparams.storedMovies = response.data;
+              return movieCallBack(response.data);
+            }
+          });
+        }
       }
     }
   }]);
