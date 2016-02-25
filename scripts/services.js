@@ -14,8 +14,14 @@ angular.module('TMDB.services', [])
           });
         }
       },
-      getOneMovie: function(movieID, movieCallBack) {
+      getOneMovie: function(movieID, movieCallBack, images) {
         $http.get(TMDBparams.base1 + movieID + TMDBparams.params.api_key).then(function(response, request) {
+          (function() {
+            $http.get(TMDBparams.base1 + movieID + '/images' + TMDBparams.params.api_key).then(function(response, request) {
+              console.log(response.data, 'These are backdrops!');
+              return images(response.data);
+            });
+          })();
           return movieCallBack(response.data);
         });
       },
@@ -39,6 +45,10 @@ angular.module('TMDB.services', [])
             }
           });
         }
+      },
+      trailers: function(movieID, movieCallBack) {
+        console.log('trailers');
+        // $http.get().then()
       }
     }
   }]);

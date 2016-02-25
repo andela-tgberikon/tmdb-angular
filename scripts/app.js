@@ -2,9 +2,12 @@ angular.module('TMDB', [
   'TMDB.controllers',
   'TMDB.services',
   'TMDB.directives',
-  'ui.router'
+  'ngMaterial'
   ])
-.config(function() {
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('pink')
+    .accentPalette('orange');
   return TMDBparams = {
     searchMovieName: '',
     storedMovies: '',

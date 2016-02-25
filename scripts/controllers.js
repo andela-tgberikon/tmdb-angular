@@ -10,6 +10,8 @@ angular.module('TMDB.controllers', [])
           $scope.displayMovies = movies.results;
           $scope.currentPage = TMDBparams.storedMovies.page;
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
+          
+          console.log(movies.results);
         });
       },
       loadObjects: function() {
@@ -30,6 +32,8 @@ angular.module('TMDB.controllers', [])
         $scope.buttons = true;
         $scope.showcase = false;
         $scope.movieReel = '';
+        $scope.backdrops = '';
+        $scope.posters = '';
       }
     };
 
@@ -38,11 +42,15 @@ angular.module('TMDB.controllers', [])
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
             in an iFrame or a html5 video player, preferrably an overlay.
             Also, reviews are a separate API call, which would be added to properties of the video.
-        */
+        */console.log(movie);
         $scope.showcase = true;
         $scope.movieReel = movie;
         $scope.displayMovies = '';
         $scope.buttons = false;
+      }, function(images){
+        $scope.posters = images.posters;
+        $scope.backdrops = images.backdrops;
+        console.log(images.posters, '<-- these are poster, and these are backdrops --> ', images.backdrops);
       });
     };
 
