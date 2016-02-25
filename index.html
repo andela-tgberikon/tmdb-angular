@@ -13,8 +13,12 @@
 <body ng-cloak>
   <div ng-controller="moviesController">
     <div ng-init="popularMovies()">
+    <button ng-click="firstPage()">First Page</button>
     <button ng-click="previousPage()"> Previous page</button>
     <button ng-click="nextPage()"> Next page</button>
+    <button ng-click="lastPage()">Last Page</button>
+    <button ng-click="goToPage(pageNumber)">Go to Page</button>
+    <input type="number" ng-model="pageNumber"></input>
     <button ng-click="backToSearch()">Back to results</button>
       <div ng-repeat="movie in displayMovies" class="oneMovie ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
         <p> Title: {{ movie.original_title }}</p>
