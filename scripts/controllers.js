@@ -1,5 +1,5 @@
 angular.module('TMDB.controllers', [])
-  .controller('moviesController', ['$scope', 'getMovies', function($scope, getMovies) {
+  .controller('moviesController', ['$scope', 'getMovies', '$mdToast', function($scope, getMovies, $mdToast) {
 
     var paginateObject = {
       getPopularMovies: function() {
@@ -10,7 +10,6 @@ angular.module('TMDB.controllers', [])
           $scope.displayMovies = movies.results;
           $scope.currentPage = TMDBparams.storedMovies.page;
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
-          
           console.log(movies.results);
         });
       },
@@ -42,12 +41,14 @@ angular.module('TMDB.controllers', [])
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
             in an iFrame or a html5 video player, preferrably an overlay.
             Also, reviews are a separate API call, which would be added to properties of the video.
-        */console.log(movie);
+        */
+        
         $scope.showcase = true;
         $scope.movieReel = movie;
         $scope.displayMovies = '';
         $scope.buttons = false;
-      }, function(images){
+  
+      }, function(images) {
         $scope.posters = images.posters;
         $scope.backdrops = images.backdrops;
         console.log(images.posters, '<-- these are poster, and these are backdrops --> ', images.backdrops);
@@ -64,6 +65,10 @@ angular.module('TMDB.controllers', [])
         getMovies.findMovie(movieName, function(movieName) {
           paginateObject.setDisplay();
           $scope.displayMovies = movieName.results;
+          console.log(TMDBparams.storedMovies.page, 'this is the currentPage');
+          console.log(TMDBparams.storedMovies.total_pages, 'this is the total_pages');
+          // $scope.currentPage = TMDBparams.storedMovies.page;
+          $scope.totalPages = TMDBparams.storedMovies.total_pages;
         });
         $scope.movieName = '';
       }
@@ -118,12 +123,18 @@ angular.module('TMDB.controllers', [])
     };
 
     $scope.goToPage = function(pageNumber) {
-      if (!TMDBparams.searchMovieName) {      
-        TMDBparams.storedMovies.page = pageNumber;
-        paginateObject.loadObjects();
+      console.log(pageNumber);
+      if (!angular.isUndefined(pageNumber)) {
+        if (!TMDBparams.searchMovieName) {
+          TMDBparams.storedMovies.page = pageNumber;
+          paginateObject.loadObjects();
+        } else {
+          TMDBparams.storedMovies.page = pageNumber;
+          paginateObject.loadSearchObjects();
+        }
       } else {
-        TMDBparams.storedMovies.page = pageNumber;
-        paginateObject.loadSearchObjects();
+        console.log('return false');
+        return false;
       }
     }
 

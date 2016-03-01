@@ -6,24 +6,31 @@
   <link rel="stylesheet" type="text/css" href="styles/cssReset.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.5/angular-material.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.5/angular-material.layouts.min.css">
+  <link href="http://vjs.zencdn.net/5.7.1/video-js.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles/app.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.5/angular-material.min.js" type="text/javascript"></script>
+  <script src="http://vjs.zencdn.net/5.7.1/video.js"></script>
 </head>
 
 <body ng-cloak>
   <div ng-controller="moviesController">
     <div ng-init="popularMovies()">
-      <button ng-click="firstPage()" ng-if="buttons" ng-cloak>First Page</button>
-      <button ng-click="previousPage()" ng-if="buttons" ng-cloak> Previous page</button>
-      <button ng-click="nextPage()" ng-if="buttons" ng-cloak> Next page</button>
-      <button ng-click="lastPage()" ng-if="buttons" ng-cloak>Last Page</button>
-      <span ng-if="buttons">
-        <button ng-click="goToPage(pageNumber)" ng-cloak>Go to Page</button>
-        <input type="number" ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}"></input>
-      </span>
+      <md-button ng-click="firstPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">First Page</md-button>
+      <md-button ng-click="previousPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Previous page</md-button>
+      <md-button ng-click="nextPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Next Page</md-button>
+      <md-button ng-click="lastPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Last Page</md-button>
+      <div layout="column">
+        <div layout="row" ng-if="buttons">
+          <md-button ng-click="goToPage(pageNumber)" ng-cloak class="md-raised md-primary">Go to Page</md-button>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Page</label>
+            <input type="number" ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}">
+          </md-input-container>
+        </div>
+      </div>
       <span ng-model="currentPage" ng-if="buttons">Page {{ currentPage }} of </span>
       <span ng-model="totalPages" ng-if="buttons">{{ totalPages }}</span>
       <button ng-click="backToSearch()">Back to results</button>
@@ -35,7 +42,7 @@
         <p> Popularity: {{ movie.popularity | number : 2 }} </p>
         <br>
         <p> Release Date: {{ movie.release_date }} </p>
-        <br>
+        <br> {{ movie.backdrop_path }}
       </div>
       <div class="oneMovie ng-cloak" ng-model="showcase" ng-if="showcase">
         <p> Title: {{ movieReel.title }} </p>
@@ -52,11 +59,13 @@
         <br>
       </div>
       <!-- Put these in a nice view, a popup or gallery display would be nice and cool -->
-      <div ng-repeat="poster in posters">
+      <div class="oneMovie">
+        <div ng-repeat="poster in posters">
           {{ poster.file_path }}
-      </div>
-      <div ng-repeat="backdrop in backdrops">
+        </div>
+        <div ng-repeat="backdrop in backdrops">
           {{ backdrop.file_path }}
+        </div>
       </div>
     </div>
     <div>
@@ -71,3 +80,20 @@
 <script src="scripts/directives.js" type="text/javascript"></script>
 
 </html>
+
+
+<!-- 
+<div layout="row" layout-padding="layout-padding" layout-wrap="layout-wrap" class="mks-marketplace-contacts">
+  <md-content ng-repeat="expert in sidetimeExperts" flex="50" flex-gt-lg="25">
+    <div class="marketplace-profile-box">
+      <div class="profile-image"><img ng-src="{{expert.avatar}}"/>
+        <div class="is-verified"><i class="mdi mdi-check"></i></div>
+      </div>
+      <div class="profile-title">{{ expert.name }}</div>
+      <div class="profile-rating"></div>
+      <div class="profile-description">{{ expert.description | limitTo: 80 }} ...</div>
+      <div class="profile-location"><i class="mdi mdi-map-marker"></i>{{ expert.location }}</div>
+      <md-button ng-click="selectExpert(expert)" class="md-primary md-mks-button mks-fill-button spacer large">View Profile</md-button>
+    </div>
+  </md-content>
+</div> -->
