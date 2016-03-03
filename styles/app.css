@@ -1,11 +1,23 @@
-.oneMovie {
-    border: 2px;
-    border-style: solid;
-    word-wrap: break-word;
-    width: 25%;
+.position{
+    margin-left: 9%;
+}
+.inputs{
+    border-color: rgba(255,255,255,255.12) !important;
+}
+.image-container{
+    padding: 0.5%;
+}
+.images{
+    height: 100%;
+}
+.white{
+    color: #fff;
 }
 .card{
-  display: inline-flex;
+  width: 304px;
+}
+.body{
+    background-color: black;
 }
 [ng\:cloak],
 [ng-cloak],
@@ -14,6 +26,9 @@
 .ng-cloak,
 .x-ng-cloak {
     display: none !important;
+}
+.movieCard{
+
 }
 /*
 .mks-marketplace-contacts {}

@@ -15,51 +15,57 @@
   <script src="http://vjs.zencdn.net/5.7.1/video.js"></script>
 </head>
 
-<body ng-cloak>
-  <div ng-controller="moviesController">
+<body class="body" ng-cloak>
+  <div class="body" ng-controller="moviesController">
     <div ng-init="popularMovies()">
-      <md-button ng-click="firstPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">First Page</md-button>
-      <md-button ng-click="previousPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Previous page</md-button>
-      <md-button ng-click="nextPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Next Page</md-button>
-      <md-button ng-click="lastPage()" ng-if="buttons" ng-cloak class="md-raised md-primary">Last Page</md-button>
-      <div layout="column">
-        <div layout="row" ng-if="buttons">
+      <div>
+        <div ng-if="buttons">
+          <md-button ng-click="firstPage()" ng-cloak class="md-raised md-primary">First Page</md-button>
+          <md-button ng-click="previousPage()" ng-cloak class="md-raised md-primary">Previous page</md-button>
+          <md-button ng-click="nextPage()" ng-cloak class="md-raised md-primary">Next Page</md-button>
+          <md-button ng-click="lastPage()" ng-cloak class="md-raised md-primary">Last Page</md-button>
           <md-button ng-click="goToPage(pageNumber)" ng-cloak class="md-raised md-primary">Go to Page</md-button>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Page</label>
-            <input type="number" ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}">
+          <md-input-container class="md-block white" flex-gt-sm>
+            <label class="white">Page</label>
+            <input class="inputs" type="number" ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}">
           </md-input-container>
         </div>
       </div>
       <span ng-model="currentPage" ng-if="buttons">Page {{ currentPage }} of </span>
       <span ng-model="totalPages" ng-if="buttons">{{ totalPages }}</span>
-      <button ng-click="backToSearch()">Back to results</button>
-      <div ng-repeat="movie in displayMovies" class="oneMovie ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
-        <p> Title: {{ movie.original_title }}</p>
-        <br>
-        <p> Overview: {{ movie.overview }} </p>
-        <br>
-        <p> Popularity: {{ movie.popularity | number : 2 }} </p>
-        <br>
-        <p> Release Date: {{ movie.release_date }} </p>
-        <br> {{ movie.backdrop_path }}
-      </div>
-      <div class="oneMovie ng-cloak" ng-model="showcase" ng-if="showcase">
-        <p> Title: {{ movieReel.title }} </p>
-        <br>
-        <p> Overview: {{ movieReel.overview }} </p>
-        <br>
-        <p> Popularity: {{ movieReel.popularity | number : 2 }} </p>
-        <br>
-        <p> Budget: {{ movieReel.budget | currency:"$":0 }} </p>
-        <br>
-        <p> Revenue: {{ movieReel.revenue | currency:"$":0 }} </p>
-        <br>
-        <p> Release date: {{ movieReel.release_date }} </p>
-        <br>
+      <md-button ng-click="backToSearch()" class="md-raised md-primary" ng-if="showcase">Back to results</md-button>
+      <div class='md-padding position' layout="row" layout-wrap>
+        <md-card ng-repeat="movie in displayMovies" class="card movieCard ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
+          <md-card-content class="image-container">
+            <!-- <p> Title: {{ movie.original_title }}</p> -->
+            <!-- <br>
+            <p> Overview: {{ movie.overview }} </p>
+            <br>
+            <p> Popularity: {{ movie.popularity | number : 2 }} </p>
+            <br>
+            <p> Release Date: {{ movie.release_date }} </p> -->
+            <img class="images" src="http://image.tmdb.org/t/p/w300/{{ movie.backdrop_path }}">
+          </md-card-content>
+        </md-card>
+        <md-card class="card ng-cloak" ng-model="showcase" ng-if="showcase">
+          <md-card-content>
+            <p> Title: {{ movieReel.title }} </p>
+            <br>
+            <p> Overview: {{ movieReel.overview }} </p>
+            <br>
+            <p> Popularity: {{ movieReel.popularity | number : 2 }} </p>
+            <br>
+            <p> Budget: {{ movieReel.budget | currency:"$":0 }} </p>
+            <br>
+            <p> Revenue: {{ movieReel.revenue | currency:"$":0 }} </p>
+            <br>
+            <p> Release date: {{ movieReel.release_date }} </p>
+            <br>
+          </md-card-content>
+        </md-card>
       </div>
       <!-- Put these in a nice view, a popup or gallery display would be nice and cool -->
-      <div class="oneMovie">
+      <div class="" ng-if="showcase">
         <div ng-repeat="poster in posters">
           {{ poster.file_path }}
         </div>
@@ -68,9 +74,14 @@
         </div>
       </div>
     </div>
+    <md-button ng-click="search(movieName)" ng-if="buttons" ng-cloak class="md-raised md-primary">Find a movie</md-button>
+    <md-input-container class="">
+      <label class="white">Search movie</label>
+      <input class="inputs" type="text" ng-model="movieName" tmdb-enter="search(movieName)">
+    </md-input-container>
     <div>
-      <button ng-click="search(movieName)"> Find a movie</button>
-      <input type="text" ng-model="movieName" tmdb-enter="search(movieName)"></input>
+      <!--      <button ng-click="search(movieName)"> Find a movie</button>
+      <input type="text" ng-model="movieName" tmdb-enter="search(movieName)"></input> -->
     </div>
   </div>
 </body>
@@ -80,8 +91,6 @@
 <script src="scripts/directives.js" type="text/javascript"></script>
 
 </html>
-
-
 <!-- 
 <div layout="row" layout-padding="layout-padding" layout-wrap="layout-wrap" class="mks-marketplace-contacts">
   <md-content ng-repeat="expert in sidetimeExperts" flex="50" flex-gt-lg="25">
