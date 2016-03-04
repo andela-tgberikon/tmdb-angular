@@ -34,19 +34,26 @@
       <span ng-model="currentPage" ng-if="buttons">Page {{ currentPage }} of </span>
       <span ng-model="totalPages" ng-if="buttons">{{ totalPages }}</span>
       <md-button ng-click="backToSearch()" class="md-raised md-primary" ng-if="showcase">Back to results</md-button>
-      <div class='md-padding position' layout="row" layout-wrap>
-        <md-card ng-repeat="movie in displayMovies" class="card movieCard ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
-          <md-card-content class="image-container">
-            <!-- <p> Title: {{ movie.original_title }}</p> -->
+      <div class='md-padding position' layout="row" layout-xs="column" layout-wrap>
+        <div></div>
+        <div ng-repeat="movie in displayMovies" class=" card movieCard ng-cloak" ng-click="oneMovie(movie.id)" ng-model="popular" ng-if="popular">
+          <div class="parent-overlay">
+            <p class="white overlay-text"> Title: {{ movie.original_title }}</p>
+            <br>
+            <p class="white overlay-text"> Overview: {{ movie.overview }}</p>
+            <div class="overlay image-container">
+              <img class="images" src="http://image.tmdb.org/t/p/w300/{{ movie.backdrop_path }}">
+            </div>
+            <!-- <p class="white"> Title: {{ movie.original_title }}</p> -->
             <!-- <br>
             <p> Overview: {{ movie.overview }} </p>
             <br>
             <p> Popularity: {{ movie.popularity | number : 2 }} </p>
             <br>
             <p> Release Date: {{ movie.release_date }} </p> -->
-            <img class="images" src="http://image.tmdb.org/t/p/w300/{{ movie.backdrop_path }}">
-          </md-card-content>
-        </md-card>
+            <!-- <img class="images" src="http://image.tmdb.org/t/p/w300/{{ movie.backdrop_path }}"> -->
+          </div>
+        </div>
         <md-card class="card ng-cloak" ng-model="showcase" ng-if="showcase">
           <md-card-content>
             <p> Title: {{ movieReel.title }} </p>
@@ -91,18 +98,3 @@
 <script src="scripts/directives.js" type="text/javascript"></script>
 
 </html>
-<!-- 
-<div layout="row" layout-padding="layout-padding" layout-wrap="layout-wrap" class="mks-marketplace-contacts">
-  <md-content ng-repeat="expert in sidetimeExperts" flex="50" flex-gt-lg="25">
-    <div class="marketplace-profile-box">
-      <div class="profile-image"><img ng-src="{{expert.avatar}}"/>
-        <div class="is-verified"><i class="mdi mdi-check"></i></div>
-      </div>
-      <div class="profile-title">{{ expert.name }}</div>
-      <div class="profile-rating"></div>
-      <div class="profile-description">{{ expert.description | limitTo: 80 }} ...</div>
-      <div class="profile-location"><i class="mdi mdi-map-marker"></i>{{ expert.location }}</div>
-      <md-button ng-click="selectExpert(expert)" class="md-primary md-mks-button mks-fill-button spacer large">View Profile</md-button>
-    </div>
-  </md-content>
-</div> -->

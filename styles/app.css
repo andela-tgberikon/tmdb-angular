@@ -1,117 +1,70 @@
-.position{
-    margin-left: 9%;
+.position {
+  margin-left: 9%;
 }
-.inputs{
-    border-color: rgba(255,255,255,255.12) !important;
+
+.inputs {
+  border-color: rgba(255, 255, 255, 255.12) !important;
 }
-.image-container{
-    padding: 0.5%;
+
+.image-container {
+  /*padding: 2.5%;*/
+  /*background-size: cover;*/
 }
-.images{
-    height: 100%;
+
+.images {
+  height: 100%;
 }
-.white{
-    color: #fff;
+
+.white {
+  color: #fff;
 }
-.card{
+
+.card {
   width: 304px;
 }
-.body{
-    background-color: black;
+
+.body {
+  background-color: black;
 }
+
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
 [x-ng-cloak],
 .ng-cloak,
 .x-ng-cloak {
-    display: none !important;
-}
-.movieCard{
-
-}
-/*
-.mks-marketplace-contacts {}
-
-.marketplace-profile-box {}
-
-.card-styles {
-    padding: 20px 25px;
-    text-align: center;
+  display: none !important;
 }
 
-.profile-image {
-    width: 100px;
+.movieCard {
+  margin: 10px;
 }
 
-.profile-title {
-    font-size: 1.2em;
-    font-weight: 700;
+.overlay {
+  background: rgba(0, 0, 0, .75);
+  /*text-align: center;*/
+  opacity: 1;
+  -webkit-transition: opacity .25s ease;
+  -moz-transition: opacity .25s ease;
 }
-
-.profile-location {
-    i {
-        margin-right: 10px;
-    }
+.overlay-text{
+  display: none;
 }
-
-.profile-description {
-    margin: 20px 0;
-    font-size: 0.9em;
-    line-height: 1.5em;
-    color: #666;
-    min-height: 80px;
-    padding: 0 20px;
+.parent-overlay{
+  position: relative;
 }
-
-.profile-tags {
-    margin-top: 25px;
+.parent-overlay:hover .overlay-text{
+  position: absolute;
+  display: initial;
+  /*max-width: 75ch;*/
+  /*width: 250px;*/
+  height: 50%;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /*z-index: -1000;*/
 }
-
-ul li {
-    display: inline-block;
-    background-color: #efefef;
-    border-radius: 15px;
-    padding: 5px 15px;
-    margin-right: 10px;
-    font-size: 0.9em;
+.parent-overlay:hover .overlay {
+  opacity: 0.3;
 }
-*/
-/*.mks-marketplace-contacts {
-    .marketplace-profile-box {
-        .card-styles;
-        padding: 20px 25px;
-        text-align: center;
-        .profile-image {
-            width: 100px;
-        }
-        .profile-title {
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-        .profile-location {
-            i {
-                margin-right: 10px;
-            }
-        }
-        .profile-description {
-            margin: 20px 0;
-            font-size: 0.9em;
-            line-height: 1.5em;
-            color: #666;
-            min-height: 80px;
-            padding: 0 20px;
-        }
-        .profile-tags {
-            margin-top: 25px;
-            ul li {
-                display: inline-block;
-                background-color: #efefef;
-                border-radius: 15px;
-                padding: 5px 15px;
-                margin-right: 10px;
-                font-size: 0.9em;
-            }
-        }
-    }
-}*/

@@ -18,6 +18,7 @@ angular.module('TMDB.services', [])
         $http.get(TMDBparams.base1 + movieID + TMDBparams.params.api_key + '&append_to_response=releases,trailers').then(function(response, request) {
           (function() {
             $http.get(TMDBparams.base1 + movieID + '/images' + TMDBparams.params.api_key).then(function(response, request) {
+              console.log(response.data);
               return images(response.data);
             });
           })();

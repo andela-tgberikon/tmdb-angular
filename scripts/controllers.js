@@ -1,6 +1,6 @@
 angular.module('TMDB.controllers', [])
-  .controller('moviesController', ['$scope', 'getMovies', '$mdToast', function($scope, getMovies, $mdToast) {
-
+  .controller('moviesController', ['$scope', 'getMovies', function($scope, getMovies) {
+    'use strict';
     var paginateObject = {
       getPopularMovies: function() {
         getMovies.popularMovies(function(movies) {
@@ -35,19 +35,19 @@ angular.module('TMDB.controllers', [])
         $scope.posters = '';
       }
     };
-
+    $scope.yeet = function(){
+      console.log(TMDBparams.storedMovies ); 
+    }
     $scope.oneMovie = function(movie) {
       getMovies.getOneMovie(movie, function(movie) {
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
             in an iFrame or a html5 video player, preferrably an overlay.
             Also, reviews are a separate API call, which would be added to properties of the video.
         */
-        
         $scope.showcase = true;
         $scope.movieReel = movie;
         $scope.displayMovies = '';
         $scope.buttons = false;
-  
       }, function(images) {
         $scope.posters = images.posters;
         $scope.backdrops = images.backdrops;
