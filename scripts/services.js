@@ -14,12 +14,21 @@ angular.module('TMDB.services', [])
           });
         }
       },
-      getOneMovie: function(movieID, movieCallBack, images) {
+      getOneMovie: function(movieID, movieCallBack, images, trailers, reviews) {
         $http.get(TMDBparams.base1 + movieID + TMDBparams.params.api_key + '&append_to_response=releases,trailers').then(function(response, request) {
           (function() {
             $http.get(TMDBparams.base1 + movieID + '/images' + TMDBparams.params.api_key).then(function(response, request) {
-              console.log(response.data);
               return images(response.data);
+            });
+          })();
+          (function() {
+            $http.get(TMDBparams.base1 + movieID + '/trailers' + TMDBparams.params.api_key).then(function(response, request) {
+              return trailers(response.data.youtube);
+            });
+          })();
+          (function() {
+            $http.get(TMDBparams.base1 + movieID + '/reviews' + TMDBparams.params.api_key).then(function(response, request) {
+              return reviews(response.data.results);
             });
           })();
           return movieCallBack(response.data);
@@ -27,19 +36,15 @@ angular.module('TMDB.services', [])
       },
       findMovie: function(movieName, movieCallBack) {
         if (movieName && (TMDBparams.params.page > 1)) {
-          console.log(movieName, 'paginate page');
           $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName + '&page=' + TMDBparams.params.page).then(function(response, request) {
-            console.log(response.data, 'this is the paginated findMovie');
             TMDBparams.storedMovies = response.data;
             return movieCallBack(response.data);
           });
         } else {
-          console.log(movieName, 'paginate your ass mofo');
           $http.get(TMDBparams.baseSearchMovie + TMDBparams.params.api_key + '&query=' + movieName).then(function(response, request) {
             if (response.data.total_results === 0) {
               return false;
             } else {
-              console.log(response.data, ' This is findMovie');
               TMDBparams.storedMovies = response.data;
               return movieCallBack(response.data);
             }

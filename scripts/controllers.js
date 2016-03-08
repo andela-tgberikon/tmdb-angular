@@ -34,11 +34,9 @@ angular.module('TMDB.controllers', [])
         $scope.backdrops = '';
         $scope.posters = '';
       }
-    };
-    $scope.yeet = function(){
-      console.log(TMDBparams.storedMovies ); 
     }
-    $scope.oneMovie = function(movie) {
+
+    $scope.oneMovie = function(movie, trailers, reviews) {
       getMovies.getOneMovie(movie, function(movie) {
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
             in an iFrame or a html5 video player, preferrably an overlay.
@@ -52,6 +50,10 @@ angular.module('TMDB.controllers', [])
         $scope.posters = images.posters;
         $scope.backdrops = images.backdrops;
         console.log(images.posters, '<-- these are poster, and these are backdrops --> ', images.backdrops);
+      }, function(trailers) {
+        console.log(trailers, 'these are the controller trailers');
+      }, function(reviews) {
+        console.log(reviews, 'these are the controller reviews');
       });
     };
 
@@ -65,9 +67,6 @@ angular.module('TMDB.controllers', [])
         getMovies.findMovie(movieName, function(movieName) {
           paginateObject.setDisplay();
           $scope.displayMovies = movieName.results;
-          console.log(TMDBparams.storedMovies.page, 'this is the currentPage');
-          console.log(TMDBparams.storedMovies.total_pages, 'this is the total_pages');
-          // $scope.currentPage = TMDBparams.storedMovies.page;
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
         });
         $scope.movieName = '';
@@ -123,8 +122,13 @@ angular.module('TMDB.controllers', [])
     };
 
     $scope.goToPage = function(pageNumber) {
-      console.log(pageNumber);
-      if (!angular.isUndefined(pageNumber)) {
+      // console.log($scope.pageNumber, 'this is before the if');
+      if ((angular.isUndefined(pageNumber)) || (pageNumber > TMDBparams.storedMovies.total_pages)) {
+        // console.log(pageNumber, 'return false');
+        return false;
+      } else {
+        //do the api call
+        console.log( 'do the api call');
         if (!TMDBparams.searchMovieName) {
           TMDBparams.storedMovies.page = pageNumber;
           paginateObject.loadObjects();
@@ -132,9 +136,6 @@ angular.module('TMDB.controllers', [])
           TMDBparams.storedMovies.page = pageNumber;
           paginateObject.loadSearchObjects();
         }
-      } else {
-        console.log('return false');
-        return false;
       }
     }
 
