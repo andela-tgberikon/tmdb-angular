@@ -16,6 +16,7 @@ angular.module('TMDB.controllers', [])
       loadObjects: function() {
         TMDBparams.params.page = TMDBparams.storedMovies.page;
         TMDBparams.storedMovies = '';
+        $scope.pageNumber = '';
         paginateObject.getPopularMovies();
       },
       loadSearchObjects: function() {
@@ -35,7 +36,10 @@ angular.module('TMDB.controllers', [])
         $scope.posters = '';
       }
     }
-
+    $scope.yeet = function(yeta){
+      console.log(yeta);
+      $scope.yeta = '';
+    }
     $scope.oneMovie = function(movie, trailers, reviews) {
       getMovies.getOneMovie(movie, function(movie) {
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
@@ -63,13 +67,18 @@ angular.module('TMDB.controllers', [])
       if (angular.isUndefined(movieName)) {
         return false;
       } else {
+        console.log(movieName);
         TMDBparams.searchMovieName = movieName;
-        getMovies.findMovie(movieName, function(movieName) {
+        getMovies.findMovie(movieName, function(searchedMovieName) {
+          console.log(searchedMovieName, 'this is movieName');
           paginateObject.setDisplay();
-          $scope.displayMovies = movieName.results;
+          $scope.displayMovies = searchedMovieName.results;
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
+          // $scope.movieName = '';
+          // TMDBparams.searchMovieName = '';
+
         });
-        $scope.movieName = '';
+        
       }
     };
 
@@ -130,10 +139,13 @@ angular.module('TMDB.controllers', [])
         //do the api call
         console.log( 'do the api call');
         if (!TMDBparams.searchMovieName) {
+          // console.log(pageNumber, 'pageNumber');
           TMDBparams.storedMovies.page = pageNumber;
           paginateObject.loadObjects();
         } else {
+          console.log(pageNumber, 'pageNumber');
           TMDBparams.storedMovies.page = pageNumber;
+          // $scope.pageNumber = '';
           paginateObject.loadSearchObjects();
         }
       }
