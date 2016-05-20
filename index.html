@@ -17,32 +17,29 @@
   <div class="body" ng-controller="moviesController">
     <div ng-init="popularMovies()">
       <div>
+        <md-input-container>
+          <md-button ng-click="goToPage(pageNumber)" ng-cloak class="md-raised md-primary">Go to Page</md-button>
+          <md-input-container>
+            <label class="white">Page</label>
+            <input class="inputs" type="number" tmdb-enter="goToPage(pageNumber)" data-ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}">
+          </md-input-container>
+        </md-input-container>
+        <span ng-model="currentPage" ng-if="buttons" class="white">Page {{ currentPage }} of </span>
+        <span ng-model="totalPages" ng-if="buttons" class="white">{{ totalPages }}</span>
         <div ng-if="buttons" class="myFlex" layout-align="center">
           <md-button ng-click="firstPage()" ng-cloak class="md-raised md-primary">First Page</md-button>
           <md-button ng-click="previousPage()" ng-cloak class="md-raised md-primary">Previous page</md-button>
           <md-button ng-click="nextPage()" ng-cloak class="md-raised md-primary">Next Page</md-button>
           <md-button ng-click="lastPage()" ng-cloak class="md-raised md-primary">Last Page</md-button>
-          <md-input-container>
-            <md-button ng-click="goToPage(pageNumber)" ng-cloak class="md-raised md-primary">Go to Page</md-button>
-            <md-input-container class="">
-              <label class="white">Page</label>
-              <input class="inputs" type="number" tmdb-enter="goToPage(pageNumber)" data-ng-model="pageNumber" ng-cloak min="1" max="{{ totalPages }}">
-            </md-input-container>
-          </md-input-container>
-          <md-input-container>
-            <md-button ng-click="search(movieName)" ng-cloak class="md-raised md-primary">Find a movie</md-button>
-            <md-input-container>
-              <label class="white">Search movie</label>
-              <input class="inputs" type="text" ng-model="movieName" tmdb-enter="search(movieName)">
-            </md-input-container>
-          </md-input-container>
-          <span ng-model="currentPage" ng-if="buttons" class="white">Page {{ currentPage }} of </span>
-          <span ng-model="totalPages" ng-if="buttons" class="white">{{ totalPages }}</span>
         </div>
+        <md-input-container>
+          <md-button ng-click="search(movieName)" ng-cloak class="md-raised md-primary">Find a movie</md-button>
+          <md-input-container>
+            <label class="white">Search movie</label>
+            <input class="inputs" type="text" ng-model="movieName" tmdb-enter="search(movieName)">
+          </md-input-container>
+        </md-input-container>
       </div>
-      <md-button ng-click="yeet(yeta)" class="md-raised md-primary">
-      This is a button
-      </md-button>
       <input ng-model="yeta" type="text" style="color:red"></input>
       <md-button ng-click="backToSearch()" class="md-raised md-primary" ng-if="showcase">Back to results</md-button>
       <div class='md-padding position' layout="row" layout-xs="column" layout-wrap>

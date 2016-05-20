@@ -36,10 +36,6 @@ angular.module('TMDB.controllers', [])
         $scope.posters = '';
       }
     }
-    $scope.yeet = function(yeta){
-      console.log(yeta);
-      $scope.yeta = '';
-    }
     $scope.oneMovie = function(movie, trailers, reviews) {
       getMovies.getOneMovie(movie, function(movie) {
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
@@ -69,16 +65,20 @@ angular.module('TMDB.controllers', [])
       } else {
         console.log(movieName);
         TMDBparams.searchMovieName = movieName;
-        getMovies.findMovie(movieName, function(searchedMovieName) {
-          console.log(searchedMovieName, 'this is movieName');
+        getMovies.findMovie(movieName, function(movieName) {
+          // console.log(movieName, 'this is movieName');
           paginateObject.setDisplay();
-          $scope.displayMovies = searchedMovieName.results;
+          $scope.displayMovies = movieName.results;
+          $scope.currentPage = movieName.page;
+          // console.log(movieName, 'this is controller search');
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
           // $scope.movieName = '';
           // TMDBparams.searchMovieName = '';
 
         });
-        
+        $scope.movieName = '';
+
+        // console.log(movieName.results, 'this is the stored page');
       }
     };
 
