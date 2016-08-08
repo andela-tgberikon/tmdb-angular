@@ -8,9 +8,12 @@ angular.module('TMDB.controllers', [])
           $scope.buttons = true;
           $scope.showcase = false;
           $scope.displayMovies = movies.results;
-          $scope.currentPage = TMDBparams.storedMovies.page;
+          $scope.currentPage = TMDBparams.storedMovies.page; //movies.page; //movies.results ? movies.page :
+          // TMDBparams.storedMovies.page;
+          // $scope.currentPage = movies.results.page;//TMDBparams.storedMovies.page;
           $scope.totalPages = TMDBparams.storedMovies.total_pages;
-          console.log(movies.results);
+          console.log(movies.page, 'From Movies.page');
+          console.log(TMDBparams.storedMovies.page, 'this is storedMovies.page');
         });
       },
       loadObjects: function() {
@@ -36,10 +39,6 @@ angular.module('TMDB.controllers', [])
         $scope.posters = '';
       }
     }
-    $scope.yeet = function(yeta){
-      console.log(yeta);
-      $scope.yeta = '';
-    }
     $scope.oneMovie = function(movie, trailers, reviews) {
       getMovies.getOneMovie(movie, function(movie) {
         /* The trailer URL is a different API call which would produce the youtube link that we would have to embed 
@@ -53,11 +52,11 @@ angular.module('TMDB.controllers', [])
       }, function(images) {
         $scope.posters = images.posters;
         $scope.backdrops = images.backdrops;
-        console.log(images.posters, '<-- these are poster, and these are backdrops --> ', images.backdrops);
+        // console.log(images.posters, '<-- these are poster, and these are backdrops --> ', images.backdrops);
       }, function(trailers) {
-        console.log(trailers, 'these are the controller trailers');
+        // console.log(trailers, 'these are the controller trailers');
       }, function(reviews) {
-        console.log(reviews, 'these are the controller reviews');
+        // console.log(reviews, 'these are the controller reviews');
       });
     };
 
@@ -66,35 +65,37 @@ angular.module('TMDB.controllers', [])
     $scope.search = function(movieName) {
       if (angular.isUndefined(movieName)) {
         return false;
-      } else {
-        console.log(movieName);
-        TMDBparams.searchMovieName = movieName;
-        getMovies.findMovie(movieName, function(searchedMovieName) {
-          console.log(searchedMovieName, 'this is movieName');
-          paginateObject.setDisplay();
-          $scope.displayMovies = searchedMovieName.results;
-          $scope.totalPages = TMDBparams.storedMovies.total_pages;
-          // $scope.movieName = '';
-          // TMDBparams.searchMovieName = '';
-
-        });
-        
       }
-    };
+  console.log(movieName);
+      TMDBparams.params.page = 1;
+  TMDBparams.storedMovies.page = 1; //
+      console.log(TMDBparams.storedMovies.page, 'TMDB storedMovies.page');
+  TMDBparams.storedMovies = '';
+  TMDBparams.searchMovieName = movieName;
+  getMovies.findMovie(movieName, function (searchedMovieName) {
+    console.log(searchedMovieName, 'this is movieName');
+    paginateObject.setDisplay();
+    $scope.displayMovies = searchedMovieName.results;
+    $scope.totalPages = TMDBparams.storedMovies.total_pages;
+    // $scope.movieName = '';
+    // TMDBparams.searchMovieName = '';
+  });
+};
 
     $scope.nextPage = function() {
       if ((TMDBparams.storedMovies.page + 1) > (TMDBparams.storedMovies.total_pages)) {
         return false;
-      } else {
-        if (!TMDBparams.searchMovieName) {
-          TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
-          paginateObject.loadObjects();
-        } else {
-          TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
-          paginateObject.loadSearchObjects();
-        }
       }
-    };
+  if (!TMDBparams.searchMovieName) {
+    TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
+    console.log(TMDBparams.storedMovies.page, 'From Popular movies');
+    paginateObject.loadObjects();
+  } else {
+    TMDBparams.storedMovies.page = TMDBparams.storedMovies.page + 1;
+    console.log(TMDBparams.storedMovies.page);
+    paginateObject.loadSearchObjects();
+  }
+};
 
     $scope.previousPage = function() {
       if ((TMDBparams.storedMovies.page - 1) === 0) {
@@ -102,9 +103,11 @@ angular.module('TMDB.controllers', [])
       } else {
         if (!TMDBparams.searchMovieName) {
           TMDBparams.storedMovies.page = TMDBparams.storedMovies.page - 1;
+          console.log(TMDBparams.storedMovies.page, 'From popular movies');
           paginateObject.loadObjects();
         } else {
           TMDBparams.storedMovies.page = TMDBparams.storedMovies.page - 1;
+          console.log(TMDBparams.storedMovies.page);
           paginateObject.loadSearchObjects();
         };
       }
